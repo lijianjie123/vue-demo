@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	
+	</head>	
+
+  <body>
+    <div id="app">
+			{{value}}
+			<wrapper v-on:focus="onFocus" :value="value" v-on:input="onFocus" placeholder="请输入">
+			</wrapper>
+			
+		
+	</div>
+		
+		<script>
+			// me
+			Vue.component("wrapper",{
+				inheritAttrs: false, //此处设置禁用继承特性
+				template:`
+					<div>
+						<son v-bind="$attrs" v-on="$listeners"></son>
+					</div>
+				`
+			}),
+			Vue.component("son",{
+				inheritAttrs: false, //此处设置禁用继承特性
+				template:`
+					<div>
+						
+						<input type="text" v-bind="$attrs" v-on="rewriteListener">
+					</div>
+				`,
+				methods:{
+					handleClick(){
+						console.log(handleClick)
+					}
+				},
+				// 爷爷绑定的值是绑定v-on:input的形式去绑定的,这样子孙子继承下来也触发不了事件,我们需要在son组件改造一下
+				computed: {
+					rewriteListener() {
+						const vm = this;
+						return Object.assign({},
+							this.$listeners,
+							{
+								input: function (event) {
+									vm.$emit("input", event.target.value)
+								}
+							}
+						)
+					}
+				}
+
+			}),
+			new Vue({
+				el:'#app',
+				data:{
+					value:''
+				},
+				
+				methods: {
+					onFocus: function(val){
+						this.$emit("onFocus", event.target.value)
+						this.value = val
+                },
+                
+            }
+					
+			})
+		
+		</script>
+
+    </body>
+</html>

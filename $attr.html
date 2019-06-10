@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	
+	</head>	
+
+  <body>
+    <div id="app">
+		<!--     
+名词解释
+$attrs--继承所有的父组件属性（除了prop传递的属性 ）2.4版本以上支持
+
+inheritAttrs：默认值true,继承所有的父组件属性（除props的特定绑定）作为普通的HTML特性应用在子组件的根元素上，
+如果你不希望组件的根元素继承特性设置inheritAttrs: false,但是class,style属性会继承
+
+-->
+
+			<base-input
+				v-model="username"
+				required
+				placeholder="Enter your username"
+				haha= "qqq"
+				value = 'hahah '
+				label = 'label'
+				class = "red"
+				style = "color: red"
+			></base-input>
+	</div>
+		
+		<script>
+			Vue.component('base-input', {
+				inheritAttrs: false, // true 继承所有父组件属性（除props特性）  false 不继承（但是 class 和style 会继承）
+				props: ['label', 'value'],
+				template: `
+					<label>
+					{{ label }}
+					<input
+						v-bind="$attrs"
+						v-bind:value="value"
+						v-on:input="$emit('input', $event.target.value)"
+					>
+					</label>
+				`
+			})
+			new Vue({
+				el:'#app',
+				data:{
+
+				},
+				methods: {
+					
+				}
+					
+			})
+		
+		</script>
+
+    </body>
+</html>

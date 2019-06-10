@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="vue.js"></script>
+	
+	</head>	
+
+  <body>
+		<div id="app">
+				<!-- 其实v-model的语法糖是这样包装而成的
+				<custom-input
+					:value="something"
+					@input="value => { something = value }">
+				</custom-input> -->
+				<my-component v-model="msg"></my-component>
+				
+				msg: {{msg}}
+				
+		</div>
+	</body>
+	<script>
+
+		Vue.component('my-component', {
+			template: `
+				<div>
+					<input type="text" :value="currentValue" @input="handleInput"/>
+					<slot></slot>
+				</div>
+			`,
+			data: function () {
+				return {
+				currentValue: this.value //将prop属性绑定到data属性上，以便修改prop属性（Vue不允许直接修改prop属性的值）
+				}
+			},
+			props: ['value'], //接收一个 value prop // v-model是语法糖 其实  是父组件中的my-component 上 绑定了:value 和@input
+			methods: {
+				handleInput(event) {
+				var value = event.target.value;
+				this.$emit('input', value); //触发 input 事件，并传入新值
+				}
+			}
+		});
+new Vue({
+    el: '#app',
+	data: {
+		msg: 'hello world',
+		
+	}
+})
+		
+		</script>
+</html>

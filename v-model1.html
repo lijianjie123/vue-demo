@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="vue.js"></script>
+	
+	</head>	
+
+  <body>
+    <div id="app">
+			<input type="radio" v-model="picked" value="a">
+
+<br/>
+<br/>
+<br/>
+
+
+<input type="radio" v-model="pick" v-bind:value="a">
+
+
+<br/>
+<br/>
+<br/>
+			<!-- <select v-model="selected">
+					<option v-for="option in options" v-bind:value="option.value">
+					  {{ option.text }}
+					</option>
+				  </select> -->
+				  <span>Selected: {{ selected }}</span>
+
+				<select v-model="selected">
+						<!-- 内联对象字面量 -->
+					  <option v-bind:value="{ number: 123 }">123</option>
+				</select>
+	</div>
+		
+		<script>
+			new Vue({
+				el:'#app',
+				data: {
+					a:'aaa',
+					pick:'',
+					picked:true,
+					selected:'',
+					options: [
+					{ text: 'One', value: 'A' },
+					{ text: 'Two', value: 'B' },
+					{ text: 'Three', value: 'C' }
+					]
+				}
+					
+			})
+		
+		</script>
+
+    </body>
+</html>
