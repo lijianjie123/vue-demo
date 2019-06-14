@@ -10,7 +10,7 @@
 		</mt-swipe>
 		<!-- @click.native = "playAudio(index)" -->
 		<mt-cell v-for = "(songs, index) in songs" :key = "index" :title="songs.filename"
-		@click.native="playAudio(index, songs.filename)"
+		@click.native="playAudio(index)"
 		>
 			<!-- <span>icon 是图片</span> -->
 			<img src="../assets/images/download_icon.png" width="20" height="20">
@@ -29,11 +29,7 @@
 				songs:[],
 			}
 		},
-		// computed: {
-		// 	firstSongInfo(){
-		// 		let 
-		// 	}
-		// },
+		
 		
 		created() {
 			//  调用组件中的函数前边要加上 this.  
@@ -49,14 +45,14 @@
 				})
 			},
 
-			playAudio(index, songname){
+			playAudio(index){
 				console.log('索引'+index);
 				//var songname = songname;
 				//var hash = this.songs[index].hash
 				var info = {
 				list: this.songs,
 				index: index  ,// 
-				songname: songname,
+				//songname: songname,
 				hash: this.songs[index].hash
 				}
 				console.log(info.list) //得到的是新歌列表的所有歌曲
@@ -69,6 +65,7 @@
 				// 点击单首歌曲要发送请求 得到点击歌曲的信息  
 				// 所以要用到dispath 触发vuex 中action中的一个异步函数，以获得歌曲信息 
 				this.$store.dispatch('getSong',info)
+				this.$store.commit('setToggleHide', false)
 				
 			}
 			

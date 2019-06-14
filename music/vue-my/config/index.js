@@ -11,6 +11,7 @@ module.exports = {
 		autoOpenBrowser: true,
 		assetsSubDirectory: 'static',
 		assetsPublicPath: '/',
+		//修改过proxyTable  后重启服务器 npm run dev  就好了
 		proxyTable: {
 			'/proxy': {
 				target: 'http://m.kugou.com', //目标接口域名
