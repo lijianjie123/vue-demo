@@ -39,7 +39,7 @@
 			getnewsongsData(){
 				this.$http.get('/proxy/?json=true').then(({data})=>{
 					//如果传一个{data} 对象的方式  是使用了 解构赋值  得到数据
-					console.log(data)
+					console.log('新歌请求得到的数据',data)
 					this.banner = data.banner
 					this.songs = data.data
 				})
@@ -49,15 +49,26 @@
 				console.log('NewSongs.vue  歌曲索引', index);
 				//var songname = songname;
 				//var hash = this.songs[index].hash
+				
+
+
 				var info = {
 				list: this.songs,
 				index: index  ,// 
 				//songname: songname,
-				hash: this.songs[index].hash
+				hash: this.songs[index].hash,
+
 				}
 				console.log(info.list) //得到的是新歌列表的所有歌曲
 				//console.log(hash)
 				
+				var infoNext = {
+					list: this.songs,
+					index: index+1  ,// 
+					//songname: songname,
+					hash: this.songs[index].hash
+				}
+
 				// 目的  更改vuex中 ListInfo 
 				this.$store.commit('setListInfo', info)
 				// 把点击的单首歌曲的hash 传递过去
@@ -67,6 +78,8 @@
 				this.$store.dispatch('getSong',info)
 				this.$store.commit('setToggleHide', false)
 				this.$store.commit('isPlay', false)
+
+				
 				
 			}
 			

@@ -17,29 +17,49 @@ module.exports = {
       //   this.$store.dispatch('getSong', hash)
       // }
 
-      playAudio(index, songname){
-				console.log('索引'+index);
+      playAudio(index){
+				console.log('NewSongs.vue  歌曲索引', index);
 				//var songname = songname;
 				//var hash = this.songs[index].hash
+				var nextsignIndex = index + 1;
+				var nexthash =  this.songs[nextsignIndex].hash
+				console.log('NewSongs.vue  下一曲索引', nextsignIndex);
+				console.log('NewSongs.vue  下一曲hash', nexthash);
+
+
 				var info = {
 				list: this.songs,
 				index: index  ,// 
-				songname: songname,
-				hash: this.songs[index].hash
+				//songname: songname,
+				hash: this.songs[index].hash,
+
+				
+				nextsignIndex: index + 1,
+				nexthash : this.songs[nextsignIndex].hash
 				}
 				console.log(info.list) //得到的是新歌列表的所有歌曲
 				//console.log(hash)
 				
+				var infoNext = {
+					list: this.songs,
+					index: index+1  ,// 
+					//songname: songname,
+					hash: this.songs[index].hash
+				}
+
 				// 目的  更改vuex中 ListInfo 
 				this.$store.commit('setListInfo', info)
 				// 把点击的单首歌曲的hash 传递过去
 				// this.$store.dispatch('getSong', hash)
 				// 点击单首歌曲要发送请求 得到点击歌曲的信息  
 				// 所以要用到dispath 触发vuex 中action中的一个异步函数，以获得歌曲信息 
-        this.$store.dispatch('getSong',info)
-        this.$store.commit('setToggleHide', false)
+				this.$store.dispatch('getSong',info)
+				this.$store.commit('setToggleHide', false)
+				this.$store.commit('isPlay', false)
+
+				//this.$store.commit('signIndex', nextsignIndex)
 				
-		  }
+			}
     }
   }
 };

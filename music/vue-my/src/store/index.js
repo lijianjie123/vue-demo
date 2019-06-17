@@ -12,7 +12,8 @@ const store = new Vuex.Store({
 			singer: '',
 			currentLength: 0,
 			songLength: 0, // 歌曲长度
-      currentFlag: false
+      currentFlag: false,
+      //index:0
       
     },
     head: {
@@ -21,7 +22,7 @@ const store = new Vuex.Store({
 			style: {'background': 'rgba(43,162,251,0)'}
     },
     
-
+    signIndex:0,
     toggleHideV:true,  //true为隐藏
 
     listenCount:0,  // 记录播放过几首歌曲  默认0开始
@@ -29,7 +30,7 @@ const store = new Vuex.Store({
     audioLoadding: false,
     headNav:'head-nav1',// 默认导航显示第一个选项
     detailPlayerFlag: false, // 播放的歌曲是否显示  默认不显示
-    //默认状态单个歌曲信息
+    //所有歌曲信息
     listInfo:{
       songs:[], //歌曲xinxi
       songIndex:'0' , // 默认第一首歌曲索引
@@ -54,7 +55,7 @@ const store = new Vuex.Store({
       return state.detailPlayerFlag
     },
     isPlay: state => state.isPlay ,
-    
+    signIndex : state => state.signIndex
   },
   mutations:{
     //用来更改 导航值
@@ -72,6 +73,7 @@ const store = new Vuex.Store({
       state.listenCount ++
 
       state.audio = {...audio}
+      
     }, 
     setToggleHide(state, bool){
      // console.log(bool)
@@ -83,6 +85,7 @@ const store = new Vuex.Store({
       state.listInfo.songIndex = index
     //state.listInfo.firstSongInfo = state.listInfo.songs[state.listInfo.songIndex]
     },
+
     // getSong(state,hash){
     //   // state.firstSongInfo = state.listInfo.songs.filter((item.index.self)=>{
     //   //   return 
@@ -100,8 +103,11 @@ const store = new Vuex.Store({
 
     },
     isPlay: (state, flag) => {
-			return state.isPlay = flag
-		},
+			state.isPlay = flag
+    },
+    signIndex:(state,index)=>{
+      state.signIndex = index
+    }
     
   },
   actions:{
@@ -127,6 +133,30 @@ const store = new Vuex.Store({
         
 
       })
+    },
+    next({dispatch, state}){
+      let list = state.listInfo.songs
+      console.log('list' ,list)
+			console.log('最后一个' , list.length)
+      let	index = ++state.listInfo.songIndex 
+      
+      if(index == list.length - 1){
+           index = 0 
+      }
+      
+      let hash = list.filter((item,key,self)=>{
+        return key == index
+      })[0].hash
+
+      
+      console.log('next---' ,hash)
+      let info = {index, hash}
+		
+				
+       
+     dispatch('getSong', info)
+
+
     }
 
   }

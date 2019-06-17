@@ -15,7 +15,7 @@
       </div>
        <div class="player-controls">
         <span class="player-Play" @click="toggleStatus()" :class="{'player-Pause':!isPlay}"></span>
-        <span class="player-nextSong" ></span>
+        <span class="player-nextSong"  @click = next()></span>
       </div>
       
     </div>
@@ -34,8 +34,8 @@ export default {
   // },
   computed: {
     // 缓存 vuex 中数据的状态  组件中使用vuex的 ...mapGetters ...mapState方法 要放在  组件的 conputed 函数中  如下：
-    ...mapGetters(['audio','audioLoadding','showPlay', 'toggleHideV', 'isPlay']),
-   
+    ...mapGetters(['audio','audioLoadding','showPlay', 'toggleHideV', 'isPlay', ]),
+  
   //  singername(){
   //    var str = this.listInfo.firstSongInfo.filename.toString();
   //    var arr =  str.split(' - ');
@@ -89,7 +89,7 @@ export default {
       },
       next(){
         // 播放完成  请求下一歌曲 播放
-        this.$store.dispatch('next');
+        this.$store.dispatch('next' );
       }
 
 
