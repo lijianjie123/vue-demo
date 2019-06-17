@@ -11,7 +11,7 @@ const store = new Vuex.Store({
 			title: '',
 			singer: '',
 			currentLength: 0,
-			songLength: 0,
+			songLength: 0, // 歌曲长度
       currentFlag: false
       
     },
@@ -35,6 +35,8 @@ const store = new Vuex.Store({
       songIndex:'0' , // 默认第一首歌曲索引
      // firstSongInfo:[],
     },
+    isPlay: false,
+    detailPlayerFlag:false //点击播放详情组件  默认不显示
     
     
   },
@@ -47,7 +49,11 @@ const store = new Vuex.Store({
     // showPlay : state =>{
     //   state.showPlay
     // } ,
-    toggleHideV : state=>{ return state.toggleHideV}
+    toggleHideV : state=>{ return state.toggleHideV},
+    detailPlayerFlag : state=>{
+      return state.detailPlayerFlag
+    },
+    isPlay: state => state.isPlay ,
     
   },
   mutations:{
@@ -88,7 +94,14 @@ const store = new Vuex.Store({
     },
     setHeadNavHide(state, bool){
       state.head.toggle = bool;
-    }
+    },
+    showDetailPlayer(state, bool){
+      state.detailPlayerFlag = bool
+
+    },
+    isPlay: (state, flag) => {
+			return state.isPlay = flag
+		},
     
   },
   actions:{
@@ -105,7 +118,8 @@ const store = new Vuex.Store({
         const	title = data.songName
         const singer = data.singerName
         const currentLength = 0
-        const audio = {songUrl, imgUrl, title, singer, currentLength }
+        const songLength = data.timeLength / 1000;
+        const audio = {songUrl, imgUrl, title, singer,songLength, currentLength }
         commit('setAudio', {audio})
           
         

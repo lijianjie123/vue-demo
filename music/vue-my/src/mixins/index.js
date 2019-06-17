@@ -36,7 +36,8 @@ module.exports = {
 				// this.$store.dispatch('getSong', hash)
 				// 点击单首歌曲要发送请求 得到点击歌曲的信息  
 				// 所以要用到dispath 触发vuex 中action中的一个异步函数，以获得歌曲信息 
-				this.$store.dispatch('getSong',info)
+        this.$store.dispatch('getSong',info)
+        this.$store.commit('setToggleHide', false)
 				
 		  }
     }

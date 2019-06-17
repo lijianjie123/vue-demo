@@ -7,17 +7,21 @@
    
     <!-- // 是否显示 播放组件 -->
     <Player></Player>
+    <!-- 歌曲播放组件 -->
+    <DetailPlayer></DetailPlayer>
   </div>
 </template>
 
 <script>
 import Head from './components/header/Head' //导入组件
 import Player from './components/Player'
+import DetailPlayer from './components/DetailPlayer'
 export default {
   name: 'App',
   components:{ //注册组件
     Head,
     Player,
+    DetailPlayer
   }
 }
 </script>

@@ -12,6 +12,7 @@
     <HeadNav v-else></HeadNav>
     
     
+    
   </div>
 </template>
 

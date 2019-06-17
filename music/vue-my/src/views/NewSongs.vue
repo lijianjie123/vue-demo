@@ -46,7 +46,7 @@
 			},
 
 			playAudio(index){
-				console.log('索引'+index);
+				console.log('NewSongs.vue  歌曲索引', index);
 				//var songname = songname;
 				//var hash = this.songs[index].hash
 				var info = {
@@ -66,6 +66,7 @@
 				// 所以要用到dispath 触发vuex 中action中的一个异步函数，以获得歌曲信息 
 				this.$store.dispatch('getSong',info)
 				this.$store.commit('setToggleHide', false)
+				this.$store.commit('isPlay', false)
 				
 			}
 			
