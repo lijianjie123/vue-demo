@@ -21,11 +21,7 @@ module.exports = {
 				console.log('NewSongs.vue  歌曲索引', index);
 				//var songname = songname;
 				//var hash = this.songs[index].hash
-				var nextsignIndex = index + 1;
-				var nexthash =  this.songs[nextsignIndex].hash
-				console.log('NewSongs.vue  下一曲索引', nextsignIndex);
-				console.log('NewSongs.vue  下一曲hash', nexthash);
-
+			
 
 				var info = {
 				list: this.songs,
@@ -33,9 +29,7 @@ module.exports = {
 				//songname: songname,
 				hash: this.songs[index].hash,
 
-				
-				nextsignIndex: index + 1,
-				nexthash : this.songs[nextsignIndex].hash
+			
 				}
 				console.log(info.list) //得到的是新歌列表的所有歌曲
 				//console.log(hash)
