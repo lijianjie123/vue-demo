@@ -116,7 +116,7 @@ const store = new Vuex.Store({
      
       // axios.get(`/proxy/app/i/krc.php?cmd=100&keyword=${info.songname}&${info.hash}`).then(({data})=>{
         axios.get(`/proxy/api/v1/song/get_song_info?cmd=playInfo&hash=${info.hash}`).then(({data})=>{
-          console.log('请求成功')
+          console.log('store  getsongd()方法 ---请求成功')
           console.log(data)
         //  data中 找到播放歌曲信息  需要用到的数据（默认状态 在state 的audio中定义了）
         const songUrl = data.url
@@ -127,36 +127,45 @@ const store = new Vuex.Store({
         const songLength = data.timeLength / 1000;
         const audio = {songUrl, imgUrl, title, singer,songLength, currentLength }
         commit('setAudio', {audio})
-          
-        
-        
-        
-
       })
     },
-    next({dispatch, state}){
+    next({dispatch, state}, bool){
+        let list = state.listInfo.songs
+        let	index = ++state.listInfo.songIndex 
+        console.log('next index初始赋值---' ,index)
+        if(index == list.length ){
+            index = 0 
+            state.listInfo.songIndex = 0
+        } 
+        let hash = list.filter((item,key,self)=>{
+          console.log('next---' ,key)
+          return key == index
+        })[0].hash
+        console.log(hash)
+        let info = {index, hash}
+      dispatch('getSong', info)
+     
+    },
+
+
+    prev({dispatch, state}){
       let list = state.listInfo.songs
-      console.log('list' ,list)
-			console.log('最后一个' , list.length)
-      let	index = ++state.listInfo.songIndex 
-      
-      if(index == list.length - 1){
-           index = 0 
+      let index = --state.listInfo.songIndex
+      console.log('prev index初始赋值---' ,index)
+      if(index == -1){
+        index = list.length - 1 
+        state.listInfo.songIndex = list.length - 1
       }
-      
+
       let hash = list.filter((item,key,self)=>{
+        console.log('prev---' ,key)
         return key == index
       })[0].hash
 
+
       
-      console.log('next---' ,hash)
       let info = {index, hash}
-		
-				
-       
-     dispatch('getSong', info)
-
-
+      dispatch('getSong', info)
     }
 
   }

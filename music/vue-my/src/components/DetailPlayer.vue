@@ -25,9 +25,9 @@
         <span class="detail_player-time">{{audio.songLength | time}}</span>
       </div>
       <div class="detail_player-control player-padding">
-        <i class="detail_player-btn play-prev player_btn-sm" ></i>
-        <i class="detail_player-btn play-play player_btn-lg" ></i>
-        <i class="detail_player-btn play-next player_btn-sm"></i>
+        <i class="detail_player-btn play-prev player_btn-sm" @click = 'prev'></i>
+        <i class="detail_player-btn play-play player_btn-lg" :class = "{'play-pause':isPlay}" @click = 'toggleStatus'></i>
+        <i class="detail_player-btn play-next player_btn-sm" @click = 'next'></i>
       </div>
     </div>
   </div>
@@ -52,7 +52,7 @@
       },
     },
     computed: {
-      ...mapGetters(['detailPlayerFlag','audio'])
+      ...mapGetters(['detailPlayerFlag','audio','isPlay'])
     },
     methods:{
       singerBack(){
@@ -63,7 +63,25 @@
       },
       songLength(){
 
-      }
+      },
+      prev(){
+        this.$store.dispatch('prev')
+      },
+      next(){
+        this.$store.dispatch('next')
+      },
+      toggleStatus(){
+      console.log('play.vue---' , this.isPlay)
+        if (!this.isPlay) {
+          // paly()方法和pause()方法  是HTML5里新增的 audio和video里的方法
+          // 使用这两个方法要对  dom对象使用   所以这里获取了 dom元素
+          document.getElementById('audioPlay').pause();
+        } else {
+          document.getElementById('audioPlay').play();
+        }
+        // 给vuex 中的'isPlay'  取反 
+        this.$store.commit('isPlay', !this.isPlay);
+    },
     }
   }
   

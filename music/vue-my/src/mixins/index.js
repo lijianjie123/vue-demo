@@ -21,20 +21,13 @@ module.exports = {
 				console.log('NewSongs.vue  歌曲索引', index);
 				//var songname = songname;
 				//var hash = this.songs[index].hash
-			
-
 				var info = {
 				list: this.songs,
 				index: index  ,// 
-				//songname: songname,
 				hash: this.songs[index].hash,
-
-			
 				}
 				console.log(info.list) //得到的是新歌列表的所有歌曲
 				//console.log(hash)
-				
-				
 
 				// 目的  更改vuex中 ListInfo 
 				this.$store.commit('setListInfo', info)
@@ -44,10 +37,7 @@ module.exports = {
 				// 所以要用到dispath 触发vuex 中action中的一个异步函数，以获得歌曲信息 
 				this.$store.dispatch('getSong',info)
 				this.$store.commit('setToggleHide', false)
-				this.$store.commit('isPlay', false)
-
-				//this.$store.commit('signIndex', nextsignIndex)
-				
+				this.$store.commit('isPlay', false)	
 			}
     }
   }

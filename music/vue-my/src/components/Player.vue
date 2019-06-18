@@ -35,21 +35,9 @@ export default {
   computed: {
     // 缓存 vuex 中数据的状态  组件中使用vuex的 ...mapGetters ...mapState方法 要放在  组件的 conputed 函数中  如下：
     ...mapGetters(['audio','audioLoadding','showPlay', 'toggleHideV', 'isPlay', ]),
-  
-  //  singername(){
-  //    var str = this.listInfo.firstSongInfo.filename.toString();
-  //    var arr =  str.split(' - ');
-  //    return arr[0]
-  //   }
   },
   // created() {
   //   this.togglePanel()
-  // },
-  // watch: {
-  //   toggleHideV(){
-  //     //this.toggleHideV = 
-  //     this.togglePanel()
-  //   }
   // },
   methods: {
     togglePanel(){
@@ -89,7 +77,7 @@ export default {
       },
       next(){
         // 播放完成  请求下一歌曲 播放
-        this.$store.dispatch('next' );
+        this.$store.dispatch('next');
       }
 
 
