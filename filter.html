@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <title>过滤器</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+ </head>
+ <body>
+  <div id="container">
+        <p>{{msg}}</p>
+        <h1>{{price}}</h1>
+        <h1>--------{{msg|myCurrency}}</h1>
+    </div>
+    <script>
+        new Vue({
+            el:"#container",
+            data:{
+                msg:"Hello VueJs",
+                price:356
+            },
+//过滤器的本质 就是一个有参数有返回值的方法
+            filters:{
+                myCurrency:function(myInput){
+                    var result = "$"+myInput;
+                    return result;
+                }
+            }
+        })
+    </script>
+ </body>
+</html>
