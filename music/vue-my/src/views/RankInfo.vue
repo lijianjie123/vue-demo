@@ -27,7 +27,7 @@ export default{
 				opacity: 0
 			}
 	},
-	// 进入组件路由的时候  触发的函数  和修改的数据状态  
+	// 进入组件路由的时候  触发的函数  和调用方法 执行  使其得到数据
 	beforeRouteEnter (to, from, next) {
 		next(
 			// 不！能！获取组件实例 `this`

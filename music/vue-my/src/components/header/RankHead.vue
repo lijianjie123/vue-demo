@@ -1,6 +1,7 @@
 <template>
-  <div class="rank-head container" :style="cStyle" id="transparent-header">
-    <a class="rank-head-back" @click="routerBack"></a>
+<!-- :style="cStyle" -->
+  <div class="rank-head container"  id="transparent-header">
+    <a class="rank-head-back"  @click="routerBack"></a>
     {{title}}
   </div>
 </template>
