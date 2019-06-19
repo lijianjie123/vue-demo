@@ -13,16 +13,25 @@
       </div>
       <div class="detail_player-lrc">
         <div class="lrc-content" style="">
-          <p >
-            {{}}</p>
+          <p >{{audio.songLength}}---{{audio.songLength | time}}</p>
+          <p>{{audio.currentLength}}---{{audio.currentLength | time}}</p>
         </div>
       </div>
       <div class="detail_player-range container">
-        <span class="detail_player-time">{{audio.songLength | time}}</span>
+        <span class="detail_player-time">{{audio.currentLength | time}}</span>
         <!--input事件会一直触发，所以禁用range，改为onclick-->
+        <!-- v-model="audio.songLength" -->
         <mt-range
-          ></mt-range>
-        <span class="detail_player-time">{{audio.songLength | time}}</span>
+            id="range"
+            :min = '0'
+            :max = 'audio.songLength'
+            :bar-height = '3'
+            disabled 
+            @click.native="rangeChange($event)"
+            style="width: 80%"
+            v-model="audio.currentLength"
+        ></mt-range>
+        <span class="detail_player-time red">{{audio.songLength | time}}</span>
       </div>
       <div class="detail_player-control player-padding">
         <i class="detail_player-btn play-prev player_btn-sm" @click = 'prev'></i>
@@ -35,7 +44,9 @@
 
 <script type="es6">
   import {mapGetters} from 'vuex';
+
   export default{
+    
     filters: {
       //过滤器的本质 就是一个有参数有返回值的方法{{audio.songLength | time}}    '|'（管道符）前的数据（audio.songLength）作为参数  传递 
       time(value){ //value 的实参 就是 '|'（管道符） 前的  那个数据
@@ -64,6 +75,15 @@
       songLength(){
 
       },
+      // rangeChange(event){
+      //   var offset = event.offsetX
+      //   var rangeWidth = (document.documentElement.clientWidth - 20) * 0.8 - 20
+      //   var clickLength = Math.floor(offset * this.audio.songLength / rangeWidth)
+      //   if (offset < rangeWidth) {
+      //     this.$store.commit('setAudioTime', clickLength)
+      //     this.$store.commit('setCurrent', true)
+      //   }
+      // },
       prev(){
         this.$store.dispatch('prev')
       },

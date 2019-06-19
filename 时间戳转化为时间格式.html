@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<div id="app">
+    <!-- 将时间戳转化为时间 -->
+    <h1>根据时间戳转化为时间：{{ str | formateTime}}</h1>
+</div>
+
+<script type="text/javascript" src='https://i0.jrjimg.cn/zqt-red-1000/focus/focus2017YMZ/teamFrighting/js/vue.min.js'></script>
+<script type="text/javascript">
+        var demo = new Vue({
+            el: "#app",
+            data: {
+                str:1560925860,
+            },
+            filters: {
+                formateTime:function(nS){
+                    return ((new Date(nS).getMonth()+1)<10?'0'+(new Date(nS).getMonth()+1):(new Date(nS).getMonth()+1)) + '-' + (new Date(nS).getDate()<10?'0'+new Date(nS).getDate():new Date(nS).getDate()) + ' ' + (new Date(nS).getHours()<10?'0'+new Date(nS).getHours():new Date(nS).getHours()) + ':' + (new Date(nS).getMinutes()<10?'0'+new Date(nS).getMinutes():new Date(nS).getMinutes())
+                }
+            },
+           
+        });
+
+</script>
+</body>
+</html>

@@ -10,10 +10,9 @@ const store = new Vuex.Store({
 			imgUrl: 'http://m.kugou.com/v3/static/images/index/logo_kugou.png',
 			title: '',
 			singer: '',
-			currentLength: 0,
+			currentLength: 0, //歌曲播放初始时间为0
 			songLength: 0, // 歌曲长度
       currentFlag: false,
-      //index:0
       
     },
     head: {
@@ -33,7 +32,7 @@ const store = new Vuex.Store({
     //所有歌曲信息
     listInfo:{
       songs:[], //歌曲xinxi
-      songIndex: ' ' , // 默认第一首歌曲索引
+      songIndex: '-1' , // 默认第一首歌曲索引
      // firstSongInfo:[],
     },
     isPlay: false,
@@ -66,13 +65,14 @@ const store = new Vuex.Store({
     },
 
     setAudio(state, {audio}){
-      if(!state.listenCount){
-        //state.toggleHideV = true //首次进入应用时 不打开播放详情
-      }
+      // if(!state.listenCount){
+      //   //state.toggleHideV = true //首次进入应用时 不打开播放详情
+      // }
 
-      state.listenCount ++
+      // state.listenCount ++
 
       state.audio = {...audio}
+     // console.log('hahah',audio.songLength)
       
     }, 
     setToggleHide(state, bool){
@@ -83,7 +83,6 @@ const store = new Vuex.Store({
     setListInfo(state,{list,index}){
       state.listInfo.songs = list
       state.listInfo.songIndex = index
-    //state.listInfo.firstSongInfo = state.listInfo.songs[state.listInfo.songIndex]
     },
 
     // getSong(state,hash){
@@ -124,9 +123,13 @@ const store = new Vuex.Store({
         const	title = data.songName
         const singer = data.singerName
         const currentLength = 0
-        const songLength = data.timeLength / 1000;
-        const audio = {songUrl, imgUrl, title, singer,songLength, currentLength }
+        const songLength = data.timeLength ;
+        const audio = {songUrl, imgUrl, title, singer, songLength, currentLength }
         commit('setAudio', {audio})
+
+        // let index = info.index
+        // let list = data
+        // commit('setListInfo',{list,index})
       })
     },
     
@@ -151,10 +154,11 @@ const store = new Vuex.Store({
     },
     next({dispatch, state}, ){
       let list = state.listInfo.songs
-      //这里有一个hash 报错  然后添加了state.listInfo.songIndex == ' ' 这个判断，
+      //这里有一个hash 报错  然后添加了state.listInfo.songIndex == '-1' 这个判断，
       // 因为初始状态的时候   没有歌曲数据 获取不到对应的hash值 
-      if(state.listInfo.songIndex == ' '){
-          return false
+      if(state.listInfo.songIndex == '-1'){
+         console.log(state.listInfo.songIndex)
+         state.listInfo.songIndex = 0
       }else{
         let	index = ++state.listInfo.songIndex 
         console.log('next index初始赋值---' ,index)
@@ -169,7 +173,7 @@ const store = new Vuex.Store({
         console.log(hash)
         let info = {index, hash}
         dispatch('getSong', info)
-    }
+      }
   },
 
   }

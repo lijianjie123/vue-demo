@@ -1,7 +1,7 @@
 <template>
 <!-- 使用添加的类名  为bool 的方式   控制了  显隐 -->
-  <div class="audio-view" :class="{'audio_panel_hide':toggleHideV}"> isPlay--{{isPlay}}
-    <audio :src="audio.songUrl"  autoplay id="audioPlay" @timeupdate="change()" @ended="next()" @error="next()"></audio>
+  <div class="audio-view" :class="{'audio_panel_hide':toggleHideV}"> isPlay--{{isPlay}}---{{audio.songLength}}
+    <audio :src="audio.songUrl" autoplay id="audioPlay" @timeupdate="change()" @ended="next()" @error="next()"></audio>
     <div class="audio-panel-control" @click="togglePanel" 
     :class="{'toggleContral':toggleHideV}" >{{toggleHideV}}
       <mt-spinner type="snake" :size="27" v-show="audioLoadding"></mt-spinner>
@@ -68,11 +68,12 @@ export default {
     change(){
         // audio.currentTime = 5; 将时间位置设置为5s  currentTime：返回当前音频的现在时间
         var time = document.getElementById('audioPlay').currentTime
+        this.audio.currentLength = time ; 
         if (this.audio.currentFlag) { // this.audio.currentFlag   通过vuex  中读取的     设置了  初始值为false
           document.getElementById('audioPlay').currentTime = this.audio.currentLength;
-          this.$store.commit('setCurrent', false);
+          //this.$store.commit('setCurrent', false);
         } else {
-          //this.$store.commit('setAudioTime', time);
+          //this.$store.commit('setAudio', audio);
         }
       },
       next(){
