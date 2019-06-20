@@ -59,6 +59,7 @@
           vm.$store.commit('setHeadNavHide', true)
           console.log('search', vm.search)
           vm.$store.commit('setHeadTitle', vm.search)
+          vm.$store.commit('showDetailPlayer', false)
         }
       )
     },
