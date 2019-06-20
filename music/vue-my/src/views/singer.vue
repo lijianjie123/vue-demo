@@ -17,6 +17,7 @@
 			<div class="cell-item" @click="goRouter(7)">欧美男歌手</div>
 			<div class="cell-item" @click="goRouter(8)">欧美女歌手</div>
 			<div class="cell-item" @click="goRouter(9)">欧美组合</div>
+			<div class="cell-item" @click="goRouter(10)">儿童</div>
 			
 		</div>
 	</div>

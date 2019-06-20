@@ -8,6 +8,11 @@ import RankInfo from '@/views/RankInfo'
 import Plist from '@/views/plist'
 import PlistInfo from '@/views/PlistInfo'
 import singer from '@/views/singer'
+import singerList from '@/views/SingerList'
+import singerInfo from '@/views/SingerInfo'
+import search from '@/views/search'
+
+
 Vue.use(Router)
 
 const router = new Router({
@@ -36,13 +41,22 @@ const router = new Router({
     {
       path: '/singer',
       component: singer
+    },
+    {
+      path: '/singer/list/:id',
+      component: singerList
     }, 
+    {
+      path: '/singer/list/info/:id',
+      component: singerInfo
+    },
+    {
+      path: '/search',
+      name:search,
+      component: search
+    },
     
-    // {
-    // path: '/rank/info/:id',
-    // component: rankinfo
-    // },
-    
+  
     {
       path: '*', redirect: '/' //匹配不到 就跳转到跟目录
     },
@@ -51,11 +65,7 @@ const router = new Router({
       name: 'HelloWorld',
       component: HelloWorld
     },
-    // {
-    //   path: '/',
-    //   name: 'HelloWorld',
-    //   component: HelloWorld
-    // },
+    
   ]
 })
 export default router

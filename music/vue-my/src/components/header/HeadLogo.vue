@@ -5,7 +5,7 @@
         <img src="http://m.kugou.com/v3/static/images/index/logo.png">
       </a>
     </div>
-    <div class="head-search" >
+    <div class="head-search" @click = 'searchRouter'>
       <img src="http://m.kugou.com/v3/static/images/index/search.png">
     </div>
   </div>
@@ -13,6 +13,13 @@
 
 <script type="es6">
   export default {
+    
+    methods:{
+      searchRouter(){
+        this.$router.push({path: '/search'})
+        
+      }
+    }
     
   }
 </script>

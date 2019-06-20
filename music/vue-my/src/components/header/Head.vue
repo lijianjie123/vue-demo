@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <HeadLogo></HeadLogo>
+    <HeadLogo ></HeadLogo>
   
     <!-- RankHead没有导航的组件 -->
     <!-- 默认先 显示导航组件   所以要让这里的值  head.toggle是false -->

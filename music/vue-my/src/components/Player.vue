@@ -3,7 +3,7 @@
   <div class="audio-view" :class="{'audio_panel_hide':toggleHideV}"> isPlay--{{isPlay}}---{{audio.songLength}}
     <audio :src="audio.songUrl" autoplay id="audioPlay" @timeupdate="change()" @ended="next()" @error="next()"></audio>
     <div class="audio-panel-control" @click="togglePanel" 
-    :class="{'toggleContral':toggleHideV}" >{{toggleHideV}}
+    :class="{'toggleContral':toggleHideV}" >
       <mt-spinner type="snake" :size="27" v-show="audioLoadding"></mt-spinner>
     </div>
    <div class="audio-panel">

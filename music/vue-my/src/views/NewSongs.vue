@@ -59,6 +59,7 @@
 				hash: this.songs[index].hash,
 
 				}
+				console.table('console.table', info.list)
 				console.log(info.list) //得到的是新歌列表的所有歌曲
 				//console.log(hash)
 				

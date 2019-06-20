@@ -20,6 +20,7 @@ const store = new Vuex.Store({
 			title: '',
 			style: {'background': 'rgba(43,162,251,0)'}
     },
+    search: '搜索',
     
     //signIndex:0,
     toggleHideV:true,  //true为隐藏
@@ -36,7 +37,7 @@ const store = new Vuex.Store({
      // firstSongInfo:[],
     },
     isPlay: false,
-    detailPlayerFlag:false //点击播放详情组件  默认不显示
+    detailPlayerFlag:false ,//点击播放详情组件  默认不显示
     
     
   },
@@ -54,7 +55,9 @@ const store = new Vuex.Store({
       return state.detailPlayerFlag
     },
     isPlay: state => state.isPlay ,
-    signIndex : state => state.signIndex
+    signIndex : state => state.signIndex,
+    search: state =>state.search
+
   },
   mutations:{
     //用来更改 导航值
@@ -116,7 +119,7 @@ const store = new Vuex.Store({
       // axios.get(`/proxy/app/i/krc.php?cmd=100&keyword=${info.songname}&${info.hash}`).then(({data})=>{
         axios.get(`/proxy/api/v1/song/get_song_info?cmd=playInfo&hash=${info.hash}`).then(({data})=>{
           console.log('store  getsong ()方法 ---请求成功')
-          console.log(data)
+          console.table('console.table',data)
         //  data中 找到播放歌曲信息  需要用到的数据（默认状态 在state 的audio中定义了）
         const songUrl = data.url
         const imgUrl = data.imgUrl.replace('{size}','400')
@@ -130,7 +133,13 @@ const store = new Vuex.Store({
         // let index = info.index
         // let list = data
         // commit('setListInfo',{list,index})
-      })
+      }).catch(
+        res=>
+         console.log('打印错误提示:',res)
+          
+        
+        
+      )
     },
     
     prev({dispatch, state}){

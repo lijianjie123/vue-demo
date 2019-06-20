@@ -11,7 +11,7 @@
     <div class="plist-desp-bottom" style="width: 100%;height: 5px;background-color: #f1f1f1"></div>
 
     <div class="rank-info-list">
-      <mt-cell v-for="(item,index) in songList" :title="item.filename" @click.native="playAudio(index)" :key="index">
+      <mt-cell v-for="(item,index) in songs" :title="item.filename" @click.native="playAudio(index)" :key="index">
         <img src="../assets/images/download_icon.png" width="20" height="20">
       </mt-cell>
     </div>
@@ -25,9 +25,9 @@
     data(){
       return {
         imgurl: '',
-        songList: [],
+        songs: [],
         updateTime: '',
-        desc: '',
+        desc: ' ',
         hideDesc: true,
         opacity: 0
       }
@@ -35,34 +35,30 @@
     //通过路由的before钩子解除router-view缓存限制
     beforeRouteEnter (to, from, next) {
       next(vm => {
-        vm.$store.commit('showHead', true)
+        vm.$store.commit('setHeadNavHide', true)
         vm.get()
         window.onscroll = ()=> {
           vm.opacity = window.pageYOffset / 250
-          vm.$store.commit('setHeadStyle', {background: `rgba(43,162,251,${vm.opacity})`})
+          //vm.$store.commit('setHeadStyle', {background: `rgba(43,162,251,${vm.opacity})`})
         }
       })
     },
     beforeRouteLeave(to, from, next){
-      this.$store.commit('showHead', false)
-      window.onscroll = null
+      this.$store.commit('setHeadNavHide', false)
+      //window.onscroll = null
       next()
     },
     methods: {
       get(){
-        Indicator.open({
-          text: '加载中...',
-          spinnerType: 'snake'
-        });
+        
         var infoID = this.$route.params.id;
         this.$http.get(`/proxy/singer/info/${infoID}&json=true`).then(({data})=> {
-          Indicator.close()
-					console.log(data)
+					console.log('singerInfo',data)
 	        const info = data.info
-	        const songList = data.songs.list
+	        const songs = data.songs.list
 	        this.imgurl = info.imgurl.replace('{size}', '400')
 	        this.desc = info.intro
-	        this.songList = songList
+	        this.songs = songs
 	        this.$store.commit('setHeadTitle', info.singername)
 				});
       },

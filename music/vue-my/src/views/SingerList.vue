@@ -1,8 +1,10 @@
 <template>
   <div class="singer_list">
-    <mt-cell v-for="item in list" :to="`/singer/info/${item.singerid}`" is-link :title="item.singername" :key="index">
-      <img slot="icon" :src="item.imgurl.replace('{size}', '400')" width="60" height="60">
-    </mt-cell>
+    <mt-cell v-for = "(item ,index) in songs" :key = "index" :title = "item.singername"
+		:to = "`/singer/list/info/${item.singerid}`">
+		
+			<img slot="icon" :src = "item.imgurl.replace('{size}', 400)" width="100" height="100">
+		</mt-cell>
   </div>
 </template>
 
@@ -11,35 +13,42 @@
   export default{
     data(){
       return {
-        list: [],
+        songs:[],
       }
     },
+    // created:{
+    //   this.getsongs()
+      
+    // },
     beforeRouteEnter(to, from, next){
-      next(vm=> {
-        vm.$store.commit('showHead', true)
-        vm.$store.commit('setHeadStyle', {'background': '#2CA2F9'})
-        vm.getList();
-      })
+      next(
+        vm=>{
+          vm.getsongs()
+          vm.$store.commit('setHeadNavHide', true)
+          
+        }
+      )
     },
     beforeRouteLeave(to, from, next){
-      this.$store.commit('showHead', false)
-      this.$store.commit('resetHeadStyle')
       next()
+      this.$store.commit('setHeadNavHide', false)
     },
-    methods: {
-      getList(){
-        Indicator.open({
-          text: '加载中...',
-          spinnerType: 'snake'
-        });
-        var singerID = this.$route.params.id
-        this.$http.get(`/proxy/singer/list/${singerID}?json=true`).then(({data})=> {
-          Indicator.close()
-	        this.list = data.singers.list.info
-					this.$store.commit('setHeadTitle', data.classname)
-				})
+    methods:{
+      getsongs(){
+        console.log('hahah')
+         var id = this.$route.params.id
+         console.log('SingerList', id)
+         this.$http.get(`/proxy/singer/list/${id}?json=true`).then(({data})=>{
+            console.log('SingerList',data)
+            this.songs = data.singers.list.info
+            console.log(this.songs)
+            var singerTitle = data.classname
+            this.$store.commit('setHeadTitle', singerTitle)
+         })
       }
     }
+
+    
   }
 </script>
 
