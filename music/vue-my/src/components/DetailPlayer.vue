@@ -35,7 +35,7 @@
       </div>
       <div class="detail_player-control player-padding">
         <i class="detail_player-btn play-prev player_btn-sm" @click = 'prev'></i>
-        <i class="detail_player-btn play-play player_btn-lg" :class = "{'play-pause':isPlay}" @click = 'toggleStatus'></i>
+        <i class="detail_player-btn play-play player_btn-lg" :class = "{'play-pause':!isPlay}" @click = 'toggleStatus'></i>
         <i class="detail_player-btn play-next player_btn-sm" @click = 'next'></i>
       </div>
     </div>
