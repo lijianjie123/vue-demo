@@ -1,9 +1,13 @@
 <template>
   <div class="singer_list">
-    <mt-cell v-for = "(item ,index) in songs" :key = "index" :title = "item.singername"
-		:to = "`/singer/list/info/${item.singerid}`">
+    <mt-cell 
+    v-for = "item,index) in songs" 
+    is-link 
+    :key = "index" 
+    :title = "item.singername"
+		:to = "`/singer/info/${item.singerid}`">
 		
-			<img slot="icon" :src = "item.imgurl.replace('{size}', 400)" width="100" height="100">
+			<img slot="icon" :src = "item.imgurl.replace('{size}', '400')" width="100" height="100">
 		</mt-cell>
   </div>
 </template>

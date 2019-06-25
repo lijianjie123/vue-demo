@@ -16,7 +16,7 @@
     
     methods:{
       searchRouter(){
-        this.$router.push({path: '/search'})
+      this.$router.push({path: '/search'})
         
       }
     }

@@ -29,6 +29,9 @@
 			}),
 			Vue.component("son",{
 				inheritAttrs: false, //此处设置禁用继承特性
+				// 名词解释
+				// $listeners--属性，它是一个对象，里面包含了作用在这个组件上的所有监听器，
+				// 你就可以配合 v-on="$listeners" 将所有的事件监听器指向这个组件的某个特定的子元素。
 				template:`
 					<div>
 						
@@ -40,7 +43,7 @@
 						console.log(handleClick)
 					}
 				},
-				// 爷爷绑定的值是绑定v-on:input的形式去绑定的,这样子孙子继承下来也触发不了事件,我们需要在son组件改造一下
+				// 爷爷组件绑定的值是绑定v-on:input的形式去绑定的,这样子孙子继承下来也触发不了事件,我们需要在son组件改造一下
 				computed: {
 					rewriteListener() {
 						const vm = this;

@@ -47,12 +47,12 @@ const router = new Router({
       component: singerList
     }, 
     {
-      path: '/singer/list/info/:id',
+      path: '/singer/info/:id',
       component: singerInfo
     },
     {
       path: '/search',
-      name:search,
+      //name:search,
       component: search
     },
     
@@ -60,11 +60,11 @@ const router = new Router({
     {
       path: '*', redirect: '/' //匹配不到 就跳转到跟目录
     },
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
+    // {
+    //   path: '/',
+    //   name: 'HelloWorld',
+    //   component: HelloWorld
+    // },
     
   ]
 })

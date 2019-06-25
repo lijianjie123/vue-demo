@@ -19,7 +19,7 @@
       <div class="search-total">
         共有{{total}}条搜索结果
       </div>
-      <mt-cell v-for = "(song,index) in songs" :title = "song.filename" @click.native = "playAudio(index)"> 
+      <mt-cell v-for = "(song,index) in songs" :key = "index" :title = "song.filename" @click.native = "playAudio(index)"> 
         <img src="../assets/images/download_icon.png" width="20" height="20">
       </mt-cell>
     </div>

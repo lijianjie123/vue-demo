@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.6/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{message}}
+        <google-map>
+        </google-map>
+
+    </div>
+<script>
+	// 父组件
+    Vue.component("google-map",{
+		template: `
+            <div>
+                 <google-map-region></google-map-region>
+            </div>
+        `,
+        methods:{
+          getMap: function ()
+          {
+            console.log("获取地图资源!")
+          }
+		},
+		//provide 提供
+        provide: function () {
+            return {
+                getMap: this.getMap
+            }
+        }
+	})
+	// 子组件
+    Vue.component("google-map-region",{
+		// inject 注入
+        inject:["getMap"],//与provide raturn  返回的方法key一致
+        methods:{
+            rightMap: function ()
+            {
+                console.log("渲染Map!调用父类方法,依赖注入");
+               this.getMap();
+            }
+        },
+        template:`
+
+               <div>
+                  <button @click="rightMap" >获取父类方法</button>
+                  <google-map-markers title="你好" haha = 'qqq' heihei = "大家好"></google-map-markers>
+                </div>
+
+        `
+	})
+	// 孙组件
+    Vue.component("google-map-markers",{
+        inheritAttrs:false, // true 继承所有父组件属性（除props特性）  false 不继承（但是 class 和style 会继承）
+        props:{"title":String, "heihei":String, },
+        inject:["getMap"],
+        methods:{
+           markerMap:function () {
+               console.log("获取 父类的父类方法 getMap");
+               this.getMap()
+           }
+		},
+		//$attrs--继承所有的父组件属性（除了prop传递的属性 ）2.4版本以上支持
+        template:`
+              <button v-bind="$attrs" @click="markerMap">{{title}}{{heihei}}</button>
+
+        `,
+    })
+
+	//根组件
+    var app=new Vue({
+        el:"#app",
+        data:function () {
+            return{
+                message:"手放开"
+            }
+        }
+    })
+</script>
+</body>
+</html>
