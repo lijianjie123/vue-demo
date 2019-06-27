@@ -9,8 +9,10 @@
 	</head>	
 
   <body>
+		<!-- $attrs和$listeners同样可以实现  爷孙组件间的通信 -->
     <div id="app">
 			{{value}}
+			<!-- 跟组件充当了 祖父 -->
 			<wrapper v-on:focus="onFocus" :value="value" v-on:input="onFocus" placeholder="请输入">
 			</wrapper>
 			
@@ -18,7 +20,7 @@
 	</div>
 		
 		<script>
-			// me
+			// 父
 			Vue.component("wrapper",{
 				inheritAttrs: false, //此处设置禁用继承特性
 				template:`
@@ -27,6 +29,7 @@
 					</div>
 				`
 			}),
+
 			Vue.component("son",{
 				inheritAttrs: false, //此处设置禁用继承特性
 				// 名词解释

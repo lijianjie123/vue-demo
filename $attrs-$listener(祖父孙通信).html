@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	
+	</head>	
+
+  <body>
+    <div id="app">
+		<!--     
+名词解释
+$attrs--继承所有的父组件属性（除了prop传递的属性 ）2.4版本以上支持
+
+inheritAttrs：默认值true,继承所有的父组件属性（除props的特定绑定）作为普通的HTML特性应用在子组件的根元素上，
+如果你不希望组件的根元素继承特性设置inheritAttrs: false,但是class,style属性会继承
+
+$listeners--属性，它是一个对象，里面包含了作用在这个组件上的所有监听器，
+你就可以配合 v-on="$listeners" 将所有的事件监听器指向这个组件的某个特定的子元素。 -->
+
+			
+	</div>
+		
+<script>
+    Vue.component('A',{
+        template:`
+            <div>
+                <p>this is parent compoent!</p>
+                <B :messagec="messagec" :message="message" v-on:getCData="getCData" v-on:getChildData="getChildData(message)"></B>
+            </div>
+        `,
+        data(){
+            return {
+                message:'hello',
+                messagec:'hello c' //传递给c组件的数据
+            }
+        },
+        methods:{
+            //获取到B组件的数据
+            getChildData(val){
+                console.log('获取到的B组件数据:' + val)
+            },
+            //执行C子组件触发的事件
+            getCData(val){
+                console.log("这是来自C组件的数据："+ val)
+            }
+        }
+    })
+    Vue.component('B',{
+        data(){
+            return {
+                mymessage:this.message
+            }
+        },
+        template:`
+            <div>
+                <input type="text" v-model="mymessage" @input="passData(mymessage)"> 
+                <!-- C组件中能直接触发getCData的原因在于 B组件调用C组件时 使用 v-on 绑定了$listeners 属性 -->
+                <!-- 通过v-bind 绑定$attrs属性，C组件可以直接获取到A组件中传递下来的props（除了B组件中props声明的） -->
+                <!-- B.vue,（就是父组件）相当于祖孙通信之间的中间件 -->
+                <C v-bind="$attrs" v-on="$listeners"></C>
+            </div>
+        `,
+        props:['message'],//得到父组件传递过来的数据
+        methods:{
+            passData(val){
+                //触发父组件中的事件
+                this.$emit('getChildData',val)
+            }
+        }
+    })
+    Vue.component('C',{
+        template:`
+            <div>
+                <input type="text" v-model="$attrs.messagec" @input="passCData($attrs.messagec)"> </div>
+        `,
+
+        methods:{
+            
+            passCData(val){
+                //触发父组件A中的事件
+                this.$emit('getCData',val)
+
+                console.log(this.$attrs)
+            }
+        }
+    })
+
+    //祖父 孙 之间的通信   父组件在中间起到 中间件的作用 要把 父组件中的 孙组件绑定<C v-bind="$attrs" v-on="$listeners"></C>
+    // 父组件上 的孙组件上  绑定的 $listeners 监听器的原因，所以 孙组件能够触发  祖父组件的事件
+    
+    //  孙组件 触发$emit()自定义事件  
+    // 祖父组件要上要绑定 孙组件的 自定义事件 v-on:getCData="getCData"  
+    var app=new Vue({
+        el:'#app',
+        template:`
+            <div>
+                <A></A>
+            </div>
+        `
+    })
+		
+		</script>
+
+    </body>
+</html>

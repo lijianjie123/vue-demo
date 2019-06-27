@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.6/vue.min.js"></script>
+</head>
+<body>
+    <div id="app">
+            <div>
+                <!-- 自定义的标签中添加任何元素页面是不会渲染的   想要显示  效果 要用v-slot 插槽来分发 -->
+                <!-- 模板中  要留有<slot></slot> 插槽  可以是无名的   具名的   作用域插槽  -->
+                <brother1>
+                    我是brother1自定义标签中的内容
+                </brother1>
+
+                
+                <brother2>
+                    <p>我是没有名字的插槽显示的内容-----也可以称作为默认default 插槽</p>
+                    <template v-slot:name>我是brother22222自定义标签中的内容</template>
+                    <template v-slot:msg = "msgProp">
+                        {{msgProp.message.a}}
+                    </template>
+                </brother2>
+        </div>
+       
+
+    </div>
+<script>
+    
+    Vue.component('brother1',{
+        template:`
+            <div>
+                <p>brother1 的模板!</p>
+            </div>
+        `,
+        
+    })
+    // 绑定在 <slot> 元素上的特性被称为插槽 prop。
+    //现在在父级作用域中，我们可以给 v-slot 带一个值来定义我们提供的插槽 prop 的名字
+    Vue.component('brother2',{
+       template:`
+            <div>
+                <slot></slot>
+                <slot name = "name"></slot>
+                </br></br>
+                <slot :message = "message" name = "msg"></slot>
+            </div>
+       `,
+       data(){
+           return{
+               message:{a:'测试msg' , b:'任意的'}
+           }
+       }
+    })
+    
+	//根组件
+    var app=new Vue({
+        el:"#app",
+        
+        
+    })
+</script>
+</body>
+</html>

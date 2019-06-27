@@ -7,12 +7,13 @@
 </head>
 <body>
     <div id="app">
-        {{message}}
-        <google-map>
-        </google-map>
+       
+        <google-map></google-map>
 
     </div>
 <script>
+    // provide  父组件通过provide 提供变量，然后子组件中通过inject 注入变量，  
+    // 无论子组件有多深，只要调用了inject 就可以注入provide 的数据，
 	// 父组件
     Vue.component("google-map",{
 		template: `
@@ -20,6 +21,11 @@
                  <google-map-region></google-map-region>
             </div>
         `,
+        data(){
+            return{
+                message:'我是父组件的message！'
+            }
+        },
         methods:{
           getMap: function ()
           {
@@ -29,14 +35,16 @@
 		//provide 提供
         provide: function () {
             return {
-                getMap: this.getMap
+                getMap: this.getMap,
+                message:this.message,
+                msg : '我是父组件中没有的msg数据'
             }
         }
 	})
 	// 子组件
     Vue.component("google-map-region",{
 		// inject 注入
-        inject:["getMap"],//与provide raturn  返回的方法key一致
+        inject:["getMap", "msg" ], // 与provide return  返回的方法key一致
         methods:{
             rightMap: function ()
             {
@@ -47,7 +55,7 @@
         template:`
 
                <div>
-                  <button @click="rightMap" >获取父类方法</button>
+                  <button @click="rightMap" >获取父类方法</button>{{msg}}
                   <google-map-markers title="你好" haha = 'qqq' heihei = "大家好"></google-map-markers>
                 </div>
 
@@ -57,11 +65,12 @@
     Vue.component("google-map-markers",{
         inheritAttrs:false, // true 继承所有父组件属性（除props特性）  false 不继承（但是 class 和style 会继承）
         props:{"title":String, "heihei":String, },
-        inject:["getMap"],
+        inject:["getMap", "message"],
         methods:{
            markerMap:function () {
                console.log("获取 父类的父类方法 getMap");
-               this.getMap()
+               this.getMap();
+               console.log(this.message)
            }
 		},
 		//$attrs--继承所有的父组件属性（除了prop传递的属性 ）2.4版本以上支持
