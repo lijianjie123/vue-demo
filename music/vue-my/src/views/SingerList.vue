@@ -1,7 +1,7 @@
 <template>
   <div class="singer_list">
     <mt-cell 
-    v-for = "item,index) in songs" 
+    v-for = "(item,index) in songs" 
     is-link 
     :key = "index" 
     :title = "item.singername"
