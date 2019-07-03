@@ -12,9 +12,20 @@
 
     </div>
 <script>
-    // 兄弟组件间的通信  使用中央事件总线
-    // (  兄弟组件通信  就是 一个  发起数据(发起数据的就是绑定的普通函数 去触发写在 methods中),,
+    // 兄弟组件：通过共同祖辈组件
+    // 通过共同的祖辈组件搭桥，$parent或$root。
+    // brother1
+            // this.$parent.$on('foo', handle)
+            // // brother2
+            // this.$parent.$emit('foo')
+
+     // (  兄弟组件通信也可是使用bus 中央事件线  发起数据(发起数据的就是绑定的普通函数 去触发写在 methods中),,
     // 另一个接收数据(接收数据的方法写在 mounted中))
+
+
+    // 任意两个组件之间通信  使用中央事件总线
+   
+
     // 新建一个vue事件bus 对象 然后通过bus.$emit 触发事件, bus.$on 监听触发的事件
 
     // 你写在html中的 就是非字符串模板。你写在js中的 template:"",这个就是字符串 模板。
@@ -28,38 +39,78 @@
     // 你在引用这个自定义元素时两种命名法都可以使用。
     // 也就是说 <my-component-name> 和 <MyComponentName> 都是可接受的。
     // 注意，尽管如此，直接在 DOM (即非字符串的模板) 中使用时只有 kebab-case 是有效的。
-
+    Vue.component('parent',{
+        template:`
+            <div style = "border:1px solid blue; padding:10px">
+                <p>this is parent-----{{parentmessage}}</p>
+                <brother1 title = "我是测试数据"  data = "11111111111111" @tognzhifu = "changeval"></brother1>
+                <brother2></brother2>
+            </div>
+        `,
+        data(){
+            return{
+                parentmessage:'parent' 
+            }
+        },
+        mounted(){
+            //绑定全局事件globalEvent
+            bus.$on('globalEvent',(val)=>{
+                this.parentmessage=val;
+            })
+        },
+        methods:{
+            changeval(val){
+                this.parentmessage = val
+            }
+        }
+    })
     Vue.component('brother1',{
         data(){
             return {
-                mymessage:'hello brother1'
+                mymessage:this.title,
+                mydata:this.data
             }
         },
+        props:['title', 'data'],
         template:`
-            <div>
+            <div style = "border:1px solid red">
                 <p>this is brother1 compoent!</p>
                 <input type="text" v-model="mymessage" @input="passData(mymessage)"> 
-
+                <input type="text" v-model="mydata" @input="pass(mydata)"> 
+<button @click = "passBro">传播数据给兄弟2</buttom>
             </div>
         `,
+        mounted(){
+            //绑定全局事件globalEvent
+            bus.$on('globalEvent',(val)=>{
+                this.brothermessage=val;
+            })
+        },
         methods:{
             passData(val){
+                this.$emit('tognzhifu', val)
+            },
+            pass(val){
                 //触发全局事件globalEvent
                 bus.$emit('globalEvent',val)
+            },
+            passBro(){
+                this.$parent.$emit('tobro2', '我是兄弟1传给兄弟2 的数据' )
 
             }
         }
     })
     Vue.component('brother2',{
         template:`
-            <div>
+            <div style = "border:1px solid green">
                 <p>this is brother2 compoent!</p>
                 <p>brother1传递过来的数据：{{brothermessage}}</p>
+                <p>{{mymessage}}</p>
             </div>
         `,
         data(){
             return {
-                mymessage:'hello brother2',
+                mymessage:'',
 
                 brothermessage:''
             }
@@ -68,6 +119,11 @@
             //绑定全局事件globalEvent
             bus.$on('globalEvent',(val)=>{
                 this.brothermessage=val;
+            })
+            this.$parent.$on('tobro2', val=>{
+
+                console.log('val', val) 
+                this.mymessage = val
             })
         }
     })
@@ -79,8 +135,7 @@
         el:"#app",
         template:`
             <div>
-                <brother1></brother1>
-                <brother2></brother2>
+                <parent></parent>
             </div>
         `
         
