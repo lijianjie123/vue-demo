@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	
+	</head>	
+
+<body>
+    
+	<div id="app">
+		<!-- <input type="checkbox" v-bind:checked="checked"/> v-bind <br/> -->
+		<input type="checkbox" v-model="checked"/>v-model <br/>
+		<label>{{ checked }}</label>
+	</div>
+	<script>
+		var a= new Vue({
+			el: '#app',
+			data(){
+			return {checked : true} 
+			}
+		})
+	</script> 
+
+
+</body>
+</html>

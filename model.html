@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	
+	</head>	
+
+  <body>
+    <div id="app">
+			<ul class="emailListUl">
+				<!-- <li style="border:1px solid red">
+					<Input type="checkbox">
+					<div>
+						<span>秒味课堂1</span>
+						<span>2015-12-30</span>
+					</div>
+					<p>JS拖拽的进一步学习,移动与拉伸JS拖拽的进一步练习</p>
+				</li> -->
+				<my-checkbox v-for = "(item,index) in list" :key = "item.id" :data = "item" ></my-checkbox>
+			</ul>		
+			
+			
+	</div>
+		
+		<script>
+			Vue.component('my-checkbox', {
+				template:`
+					<li style="border-bottom:1px solid red; margin-top:5px">
+						<Input v-model="data.checked" @change = "val =>{data.checked = val}">v-bind</Input>
+						<label>{{ data.checked }}</label>
+						<div>
+							<span>{{data.caption}}</span>
+							<span>{{data.time}}</span>
+						</div>
+						<p>{{data.desc}}</p>
+					</li>
+				`,
+				
+				
+				
+				props:{
+					data:{
+						type:Object,	
+					}	
+				}
+			 })
+
+			Vue.component('Input',{
+				template:`<input type="checkbox" :checked = "checked" @change = "onChange($event)">`,
+				model: {
+					prop: 'checked',
+					event: 'change'
+				},
+				
+				props:{
+					//value: String,  如果用的到 这个value是父组件传递的属性
+					checked:{  
+						// 这个checked 要格外注意  定义的类型 要和  父组件的自定义组件的类型相同  
+						// v-model="data.checked" data.checked 的类型为布尔  这也要写布尔
+						type:Boolean, 
+						default:false
+					}
+				},
+				methods:{
+					onChange(e) {
+						console.log(e.target.checked)
+						//这里的事件源   要修改为 checked  不是value
+					  this.$emit("change", e.target.checked);
+					}
+				}
+
+			})
+
+
+
+ 			let list = [
+				{
+					"id": "0",
+					"caption": "秒味课堂1111111",
+					"time": "2015-12-301111111",
+					"desc": "11JS拖拽的进一步学习,移动与拉伸JS拖拽的进一步练习1111111",
+					"checked": false,
+				},
+				{
+					"id": "1",
+					"checked": false,
+					"caption": "秒味课堂222222",
+					"time": "2015-12-302222222",
+					"desc": "22JS拖拽的进一步学习,移动与拉伸JS拖拽的进一步练习22222222"
+				},
+				{
+					"id": "2",
+					"checked": false,
+					"caption": "秒味课堂33333333",
+					"time": "2015-12-30333333333",
+					"desc": "33JS拖拽的进一步学习,移动与拉伸JS拖拽的进一步练习333333"
+				},
+				{
+					"id": "3",
+					"checked": false,
+					"caption": "秒味课堂444444",
+					"time": "2015-12-3044444444",
+					"desc": "44JS拖拽的进一步学习,移动与拉伸JS拖拽的进一步练习44444"
+				},
+				{
+					"id": "4",
+					"checked": false,
+					"caption": "秒味课堂555555",
+					"time": "2015-12-305555555",
+					"desc": "55JS拖拽的进一步学习,移动与拉伸JS拖拽的进一步练习5555555555"
+				}
+			]
+			new Vue({
+				el:'#app',
+				data:{
+					list: list
+				},
+				methods: {
+					
+				},
+				
+			})
+
+
+
+
+		</script>
+
+    </body>
+</html>
