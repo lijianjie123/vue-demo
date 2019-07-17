@@ -2,14 +2,19 @@ import axios from 'axios'
 import store from '@/store/index.js'
 import baseURL from './baseUrl'
 import { Message } from 'element-ui'
+//这个http 是默认倒出的
 const http = {}
 
+// instance 实例
 var instance = axios.create({
+    //连接超时 这里是 毫秒为单位
     timeout: 5000,
     baseURL
 })
 
 // 添加请求拦截器
+// 全局拦截
+// 请求前的拦截
 instance.interceptors.request.use(
     function(config) {
         // 请求头添加token
@@ -19,11 +24,14 @@ instance.interceptors.request.use(
         return config
     },
     function(error) {
+        //请求错误时做些事
         return Promise.reject(error)
     }
 )
 
 // 响应拦截器即异常处理
+
+//请求后的拦截  响应拦截
 instance.interceptors.response.use(
     response => {
         return response.data

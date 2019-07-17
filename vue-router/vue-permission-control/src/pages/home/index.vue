@@ -12,6 +12,8 @@ import TotalStatus from './component/total-status'
 import TodoList from './component/todo-list'
 import Charts from './component/charts'
 
+//import Charts from './component/charts'
+
 export default {
     data() {
         return {}

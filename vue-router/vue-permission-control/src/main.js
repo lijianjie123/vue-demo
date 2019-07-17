@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from '@/App'
 import store from '@/store/index'
-import router from '@/router/index'
+import router from '@/router/index'  // 导入的初始路由
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -15,28 +15,44 @@ Vue.prototype.$http = axios
 Object.keys(globalFilter).forEach(key => {
     Vue.filter(key, globalFilter[key])
 })
+console.log('globalFilter', Object.keys(globalFilter))
+console.log(globalFilter)
+
 
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
+    console.log('beforeEach' )
+    // console.log('to', to)
+    // console.log('from', from)
+    console.log('next', next)
+    //如果UserToken 不存在
     if (!store.state.UserToken) {
+        console.log(1)
         if (
             to.matched.length > 0 &&
             !to.matched.some(record => record.meta.requiresAuth)
         ) {
+            console.log(5)
             next()
         } else {
+            console.log(3)
             next({ path: '/login' })
         }
-    } else {
+    } else { //如果UserToken 存在
+        console.log(2, store.state.permission)
+        // 路由列表是否为真
         if (!store.state.permission.permissionList) {
+            console.log(4)
+            // 触发异步函数
             store.dispatch('permission/FETCH_PERMISSION').then(() => {
+               // console.log(to.path)
                 next({ path: to.path })
             })
         } else {
-            if (to.path !== '/login') {
+            if (to.path !== '/login') { // 这步防止进入死循环
                 next()
             } else {
                 next(from.fullPath)

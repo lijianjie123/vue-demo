@@ -1,7 +1,7 @@
 <template>
     <el-menu
         :collapse="isSidebarNavCollapse"
-        background-color="#304156"
+        background-color="#ccc"
         text-color="#eee"
         active-text-color="#4dbcff"
         :default-active="currentMenu"

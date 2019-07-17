@@ -8,16 +8,17 @@
             </div>
             <div class="login--password">
                 <span>密码：</span>
-                <input type="password"  placeholder="随便输" name="password" v-model.trim="password" @keyup.enter="login"/>
+                <input type="password"  placeholder="随便输" name="password" v-model.trim="password" @keyup.enter="loginBtn"/>
             </div>
             <p class="login--btn">
-                <button id="loginBtn" @click="login">登录</button>
+                <button id="loginBtn" @click="loginBtn">登录</button>
             </p>
         </div>
     </div>
 </template>
 
 <script>
+// 代表只导入了 '@/api/permission'这个文件下的  login 方法
 import { login } from '@/api/permission'
 export default {
     data() {
@@ -27,12 +28,17 @@ export default {
         }
     },
     methods: {
-        async login() {
+        async loginBtn() {
             try {
-                let data = await login()
+                let data = await login() //  调用login（）方法  得到的是token
+                //console.log('data11', data)
                 let token = data.token
-                this.$store.commit('LOGIN_IN', token)
-                this.$router.replace('/')
+                //console.log('data22', token)
+                this.$store.commit('LOGIN_IN', token) // 这里进行了token的存储  存储到了localStorage 中
+                // console.log('qqqqqq', localStorage.getItem('token'))
+                
+                this.$router.replace('/') // 替换掉当前的history 记录
+                console.log('进入根路径后 进入路由守卫开始执行  路由守卫中的步骤')
             } catch (e) {
                 console.log(e)
             }

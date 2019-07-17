@@ -1,6 +1,6 @@
 import { fetchPermission } from '@/api/permission'
 import router, { DynamicRoutes } from '@/router/index'
-import { recursionRouter, setDefaultRoute } from '@/utils/recursion-router'
+import { recursionRouter, setDefaultRoute } from '@/utils/recursion-router'  //实用程序 utils
 import dynamicRouter from '@/router/dynamic-router'
 
 export default {
@@ -30,14 +30,25 @@ export default {
     },
     actions: {
         async FETCH_PERMISSION({ commit, state }) {
-            let permissionList = await fetchPermission()
+            //需要验证的
+            let permissionList = await fetchPermission() // 执行请求后端的接口  得到的是需要权限验证的路由
+            console.log(permissionList)
 
             /*  根据权限筛选出我们设置好的路由并加入到path=''的children */
-            let routes = recursionRouter(permissionList, dynamicRouter)
+            // permissionList 得到的是需要权限验证的路由   后台返回的用户权限json
+            // dynamicRouter 前端配置好的所有动态路由的集合
+
+            //递归路由 recursionRouter(需要权限验证的路由, 前端配置好的所有动态路由的集合)
+            let routes = recursionRouter(permissionList, dynamicRouter) // 得到的是  根据用户的权限 过滤后的路由
+            console.log('routes', routes)
+
             let MainContainer = DynamicRoutes.find(v => v.path === '')
             let children = MainContainer.children
+            // console.log('children', children[0].path)
+            // console.log('children', children.length)
             children.push(...routes)
-
+            // console.log('children', children)
+            
             /* 生成左侧导航菜单 */
             commit('SET_MENU', children)
 
@@ -53,7 +64,8 @@ export default {
             setDefaultRoute([MainContainer])
 
             /*  初始路由 */
-            let initialRoutes = router.options.routes
+            let initialRoutes = router.options.routes //初始路由  /login
+            console.log('initialRoutes', initialRoutes)
 
             /*  动态添加路由 */
             router.addRoutes(DynamicRoutes)

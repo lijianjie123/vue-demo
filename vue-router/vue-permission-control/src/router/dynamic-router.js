@@ -13,7 +13,7 @@ const Goods = () => import('pages/goods-manage')
 const GoodsList = () => import('pages/goods-manage/goods-list')
 const GoodsClassify = () => import('pages/goods-manage/goods-classify')
 
-/* 需要权限判断的路由 */
+/* 需要权限判断的路由 */ // dynamicRoutes 动态路由
 const dynamicRoutes = [
     {
         path: '/order',
@@ -101,7 +101,11 @@ const dynamicRoutes = [
                 }
             }
         ]
-    }
+    },
+    // {
+    //     path:"/list",
+
+    // }
 ]
 
-export default dynamicRoutes
+export default dynamicRoutes  

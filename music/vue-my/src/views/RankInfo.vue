@@ -40,7 +40,7 @@ export default{
 			}
 		)
 	},
-	// 离开的时候要把修改多的数据  改回去  
+	// 离开的时候要把修改过的数据  改回去  
 	beforeRouteLeave (to, from, next) {
 		this.$store.commit('setHeadNavHide',false)
 		next()	// ...

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style = "border:1px solid red">
         <el-row class="grow">
             <el-col :md="2" :lg="4" class="grow__item">
                 <div class="grow__item--detail clearfix">

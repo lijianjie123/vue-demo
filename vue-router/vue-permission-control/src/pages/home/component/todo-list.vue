@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style = "border:1px solid blue">
        mmm
     </div>
 </template>

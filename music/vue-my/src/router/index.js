@@ -60,11 +60,7 @@ const router = new Router({
     {
       path: '*', redirect: '/' //匹配不到 就跳转到跟目录
     },
-    // {
-    //   path: '/',
-    //   name: 'HelloWorld',
-    //   component: HelloWorld
-    // },
+    
     
   ]
 })
