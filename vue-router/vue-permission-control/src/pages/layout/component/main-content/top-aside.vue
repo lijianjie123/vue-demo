@@ -61,6 +61,7 @@ export default {
         loginOut() {
             this.$store.commit('LOGIN_OUT')
             /* 防止切换角色时addRoutes重复添加路由导致出现警告 */
+            // reload() 方法用于重新加载当前文档。
             window.location.reload()
         }
     }
