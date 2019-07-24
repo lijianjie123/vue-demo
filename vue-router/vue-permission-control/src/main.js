@@ -25,12 +25,13 @@ Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
     console.log('beforeEach' )
-    // console.log('to', to)
-    // console.log('from', from)
+    console.log('to', to)
+    console.log('from', from)
     console.log('next', next)
-    //如果UserToken 不存在
+    //如果UserToken 不存在  说明用户没有登录
     if (!store.state.UserToken) {
-        console.log(1)
+        console.log(1) 
+        //record  记录
         if (
             to.matched.length > 0 &&
             !to.matched.some(record => record.meta.requiresAuth)
@@ -55,11 +56,25 @@ router.beforeEach((to, from, next) => {
             if (to.path !== '/login') { // 这步防止进入死循环
                 next()
             } else {
-                next(from.fullPath)
+                next(from.fullPath) //fullPath匹配路由，path匹配路径
             }
         }
     }
 })
+
+
+// router.beforeEach((to, from, next)=>{
+//     // 全局路由守卫会先执行
+//     //先看UserToken存不存在
+//     if(!store.state.UserToken){
+//         // if(){}
+//     }else{ // 存在
+
+        
+
+//     }
+
+// })
 
 router.afterEach((to, from, next) => {
     var routerList = to.matched

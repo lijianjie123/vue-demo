@@ -9,7 +9,7 @@ const http = {}
 var instance = axios.create({
     //连接超时 这里是 毫秒为单位
     timeout: 5000,
-    baseURL
+    baseURL    //'http://localhost:8080'
 })
 
 // 添加请求拦截器

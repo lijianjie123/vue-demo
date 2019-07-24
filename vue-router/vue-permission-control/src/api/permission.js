@@ -2,7 +2,7 @@
 import axios from '@/config/httpConfig'
 
 
-// 
+// 得到的是需要权限的路由
 export function fetchPermission() {
     return axios.get('/static/permission.json') // 得到的是需要权限的路由
 }
