@@ -35,17 +35,19 @@ export default {
             console.log(permissionList)
 
             /*  根据权限筛选出我们设置好的路由并加入到path=''的children */
-            // permissionList 得到的是需要权限验证的路由   后台返回的用户权限json
-            // dynamicRouter 前端配置好的所有动态路由的集合
+            // permissionList  后台返回的用户的权限路由json   需要权限验证的路由
+            //  dynamicRouter 提前设置好的动态路由集合
+            // recursionRouter  递归路由  返回的是  根据用户权限在动态路由（dynamicRouter） 中过滤出来的路由
 
             //递归路由 recursionRouter(需要权限验证的路由, 前端配置好的所有动态路由的集合)
             let routes = recursionRouter(permissionList, dynamicRouter) // 得到的是  根据用户的权限 过滤后的路由
             console.log('routes', routes)
-
+            // 找到要往哪里添加  过滤出来的路由
             let MainContainer = DynamicRoutes.find(v => v.path === '')
             let children = MainContainer.children
             // console.log('children', children[0].path)
             // console.log('children', children.length)
+             // 添加路由（凑成用户的全路由）
             children.push(...routes)
             // console.log('children', children)
             
@@ -67,7 +69,7 @@ export default {
             let initialRoutes = router.options.routes //初始路由  /login
             console.log('initialRoutes', initialRoutes)
 
-            /*  动态添加路由 */
+            /*  动态添加路由 */// 根据用户权限筛选出来的路由 已经push到了DynamicRoutes 的下面
             router.addRoutes(DynamicRoutes)
 
             /* 完整的路由表 */

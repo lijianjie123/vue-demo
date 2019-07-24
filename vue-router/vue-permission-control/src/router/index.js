@@ -30,7 +30,7 @@ export const DynamicRoutes = [
         name: 'container',
         redirect: 'home',
         meta: {
-            requiresAuth: true,
+            requiresAuth: true,//代表需要权限验证
             name: '首页'
         },
         children: [
