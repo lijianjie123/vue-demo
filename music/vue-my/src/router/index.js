@@ -21,7 +21,8 @@ const router = new Router({
       path: '/newSongs',
       component: newSongs,
       alias: '/'
-    }, {
+    }, 
+    {
       path: '/rank',
       component: rank
     },

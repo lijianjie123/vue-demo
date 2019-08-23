@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="cell-group">
-			<div class="cell-item" @click="goRouter(88)">热门歌手</div>
+			<div class="cell-item" @click="goRouter(80)">热门歌手</div>
 		</div>
 		<div class="cell-group">
 			<div class="cell-item" @click="goRouter(1)">华语男歌手</div>

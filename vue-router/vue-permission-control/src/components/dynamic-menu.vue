@@ -1,6 +1,7 @@
 <template>
     <div class="menu-container">
         <template v-for="v in menuList">
+            <!-- 有子路由的情况   就会形成树形菜单  使用递归组件形成树形菜单-->
             <el-submenu :index="v.name" v-if="v.children&&v.children.length>0" :key="v.name">
                 <template slot="title">
                     <i class="iconfont" :class="v.meta.icon"></i>
@@ -10,6 +11,7 @@
                     <my-nav :menuList="v.children"></my-nav>
                 </el-menu-item-group>
             </el-submenu>
+            <!-- 没有子路由的情况  直接形成导航按钮 -->
             <el-menu-item :key="v.name" :index="v.name" @click="gotoRoute(v.name)" v-else>
                 <i class="iconfont" :class="v.meta.icon"></i>
                 <span slot="title">{{v.meta.name}}</span>

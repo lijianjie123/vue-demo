@@ -102,10 +102,7 @@ const dynamicRoutes = [
             }
         ]
     },
-    // {
-    //     path:"/list",
-
-    // }
+    
 ]
 
 export default dynamicRoutes  
