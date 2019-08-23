@@ -10,8 +10,8 @@
 
   <body>
     <div id="app">
-            <!-- https://www.jianshu.com/p/4649d317adfe -->
-		<!--     
+<!-- https://www.jianshu.com/p/4649d317adfe -->
+<!--     
 名词解释
 $attrs--继承所有的父组件属性（除了prop传递的属性 ）2.4版本以上支持
 
@@ -25,17 +25,18 @@ $listeners--属性，它是一个对象，里面包含了作用在这个组件�
 	</div>
 		
 <script>
+    // A 祖父组件 
     Vue.component('A',{
         template:`
             <div>
                 <p>this is parent compoent!</p>
-                <B :messagec="messagec" :message="message" v-on:getCData="getCData" v-on:getChildData="getChildData(message)"></B>
+                <B :messagec="messagec" :message="message" title= "我是来测试$attrs 属性继承出去props以外的属性的" v-on:getCData="getCData" v-on:getChildData="getChildData(message)"></B>
             </div>
         `,
         data(){
             return {
-                message:'hello',
-                messagec:'hello c' //传递给c组件的数据
+                message:'hello-message',
+                messagec:'hello c-messagec' //传递给c组件的数据
             }
         },
         methods:{
@@ -49,6 +50,8 @@ $listeners--属性，它是一个对象，里面包含了作用在这个组件�
             }
         }
     })
+
+    // B 父组件 
     Vue.component('B',{
         data(){
             return {
@@ -68,13 +71,16 @@ $listeners--属性，它是一个对象，里面包含了作用在这个组件�
         methods:{
             passData(val){
                 //触发父组件中的事件
-                this.$emit('getChildData',val)
+                this.$emit('getChildData',val) // 
             }
         }
     })
+
+    // C 子组件 
     Vue.component('C',{
         template:`
             <div>
+                <!-- 通过v-bind 绑定$attrs属性，C组件可以直接获取到A组件中传递下来的props（除了B组件中props声明的） -->
                 <input type="text" v-model="$attrs.messagec" @input="passCData($attrs.messagec)"> </div>
         `,
 
@@ -90,7 +96,7 @@ $listeners--属性，它是一个对象，里面包含了作用在这个组件�
     })
 
     //祖父 孙 之间的通信   父组件在中间起到 中间件的作用 要把 父组件中的 孙组件绑定<C v-bind="$attrs" v-on="$listeners"></C>
-    // 父组件上 的孙组件上  绑定的 $listeners 监听器的原因，所以 孙组件能够触发  祖父组件的事件
+    // 由于父组件上 的孙组件上  绑定的 $listeners 监听器的原因，所以 孙组件能够触发  祖父组件的事件
     
     //  孙组件 触发$emit()自定义事件  
     // 祖父组件要上要绑定 孙组件的 自定义事件 v-on:getCData="getCData"  

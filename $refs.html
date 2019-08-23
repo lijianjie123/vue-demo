@@ -45,7 +45,7 @@
 			},
 			methods:{
 				myclick:function () {
-					this.$root.message=this.$root.message+1;//反问根组件的实例
+					this.$root.message=this.$root.message+1;//访问根组件的实例
 					this.$parent.message=this.$root.message+1; //访问父组件的实例
 					console.log(this.$root.message)
 	
