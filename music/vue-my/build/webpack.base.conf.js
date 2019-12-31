@@ -18,6 +18,7 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
+    // 但是一般我们做好的项目都会上传到线上，域名下到文件，这个时候自动生成的index.html里面的js路径不是我想要到，我想要在路径前面加上域名
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
@@ -41,16 +42,21 @@ module.exports = {
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
+      /* 
+      对图片相关的文件使用 url-loader 插件，这个插件的作用是将一个足够小的文件生成一个64位的DataURL 
+      可能有些老铁还不知道 DataURL 是啥，当一个图片足够小，为了避免单独请求可以把图片的二进制代码变成64位的 
+      */
+
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]')
+          limit: 10000,// 限制 10000 个字节以下转base64，以上不转
+          name: utils.assetsPath('img/[name].[hash:7].[ext]')//资源发布路径; 
         }
       },
       {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,//引用媒体
         loader: 'url-loader',
         options: {
           limit: 10000,

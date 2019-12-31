@@ -30,7 +30,8 @@ $listeners--属性，它是一个对象，里面包含了作用在这个组件�
         template:`
             <div>
                 <p>this is parent compoent!</p>
-                <B :messagec="messagec" :message="message" title= "我是来测试$attrs 属性继承出去props以外的属性的" v-on:getCData="getCData" v-on:getChildData="getChildData(message)"></B>
+                <B :messagec="messagec" :message="message" title= "我是来测试$attrs 属性继承出去props以外的属性的" 
+                v-on:getCData="getCData" v-on:getChildData="getChildData(message)"></B>
             </div>
         `,
         data(){

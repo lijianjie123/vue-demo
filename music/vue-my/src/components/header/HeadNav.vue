@@ -25,7 +25,7 @@
         },
         // 计算属性中 设置新值的方式
         set(newheadnav){
-          console.log(newheadnav) //哪到了新值  要想办法修改vuex 中的 headernav的状态 
+          console.log(newheadnav) //拿到了新值  要想办法修改vuex 中的 headernav的状态 
           this.$store.commit('changeHeadnav', newheadnav)
           this.goRouter(newheadnav)
         }

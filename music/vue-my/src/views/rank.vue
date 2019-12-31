@@ -27,7 +27,7 @@
 		},
 		methods: {
 			getRanklistData(){
-				this.$http.get('/proxy/rank/list&json=true').then(({data})=>{
+				this.$http.get('rank/list&json=true').then(({data})=>{
 					console.log(data)
 					this.ranklist = data.rank.list
 					console.log(this.ranklist)

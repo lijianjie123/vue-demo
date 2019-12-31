@@ -13,10 +13,18 @@ Vue.use(MintUI)
 
 import './assets/css/neat-min.css'
 import './assets/css/style.css'
-          
+ 
+axios.defaults.headers.post["content-type"] = "application/x-www-form-urlencoded"
+
 Vue.config.productionTip = false
 
 Vue.prototype.$http = axios; // 挂载到vue的原型
+
+// Vue.prototype.baseUrl = process.env.NODE_ENV === "production"? "http://m.kugou.com" : "/proxy"
+
+
+// https://www.hangge.com/blog/cache/detail_2496.html
+axios.defaults.baseURL = process.env.API_HOST  //设置 axios 的默认 baseURL。这个是项目中用到axios的就能
 
 /* eslint-disable no-new */
 new Vue({

@@ -7,39 +7,42 @@ const path = require('path')
 module.exports = {
   dev: {
 		env: require('./dev.env'),
+		host:'localhost',
 		port: 8080,
 		autoOpenBrowser: true,
 		assetsSubDirectory: 'static',
 		assetsPublicPath: '/',
+
+		// proxy跨域的时候使用的接口代理
 		//修改过proxyTable  后重启服务器 npm run dev  就好了
 		proxyTable: {
-			'/proxy': {
-				target: 'http://m.kugou.com', //目标接口域名
-				changeOrigin: true,  // 是否跨域
-				pathRewrite: {
-					'^/proxy': ''  // 重写接口
-        }
-// https://blog.csdn.net/jikangjian/article/details/80798677  如下参考地址
-//         pathRewrite: {
-//           '^/api': '/api'   // 这种接口配置出来     http://XX.XX.XX.XX:8080/api/login
-//           //'^/api': '/' 这种接口配置出来     http://XX.XX.XX.XX:8080/login
-//         }
+// 			'/proxy': {
+// 				target: 'http://m.kugou.com', //目标接口域名
+// 				changeOrigin: true,  // 是否跨域
+// 				pathRewrite: {
+// 					'^/proxy': ''  // 重写接口
+//         		}
+// // https://blog.csdn.net/jikangjian/article/details/80798677  如下参考地址
+// //         pathRewrite: {
+// //           '^/api': '/api'   // 这种接口配置出来     http://XX.XX.XX.XX:8080/api/login
+// //           '^/api': '/'         这种接口配置出来     http://XX.XX.XX.XX:8080/login
+// //         }
 
-			},
-			'/aproxy': {
-				target: 'http://mobilecdn.kugou.com',
-				changeOrigin: true,
-				pathRewrite: {
-					'^/aproxy': ''
-				}
-			},
-			'/bproxy': {
-				target: 'http://www.kugou.com',
-				changeOrigin: true,
-				pathRewrite: {
-					'^/bproxy': ''
-				}
-			}
+// 			},
+// 			'/aproxy': {
+// 				target: 'http://mobilecdn.kugou.com',
+// 				changeOrigin: true,
+// 				pathRewrite: {
+// 					'^/aproxy': ''
+// 				}
+// 			},
+// 			'/bproxy': {
+// 				target: 'http://www.kugou.com',
+// 				changeOrigin: true,
+// 				pathRewrite: {
+// 					'^/bproxy': ''
+// 				}
+// 			}
 		},
 		// CSS Sourcemaps off by default because relative paths are "buggy"
 		// with this option, according to the CSS-Loader README
@@ -56,7 +59,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

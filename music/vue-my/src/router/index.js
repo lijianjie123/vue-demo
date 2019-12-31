@@ -16,6 +16,7 @@ import search from '@/views/search'
 Vue.use(Router)
 
 const router = new Router({
+  mode:'hash',
   routes: [
     {
       path: '/newSongs',

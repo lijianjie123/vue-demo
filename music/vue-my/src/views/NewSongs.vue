@@ -21,7 +21,8 @@
 <script>
 	//import { PLAY_AUDIO } from '../mixins'  // 在需要的文件导入
 	export default{
-		//混入对象可以包含任意组件选项。当组件使用混入对象时，所有混入对象的选项将被混入该组件本身的选项。 所以混入对象中可以使用组件在中的数据
+		//混入对象可以包含任意组件选项。当组件使用混入对象时，所有混入对象的选项将被混入该组件本身的选项。 
+		// 所以混入对象中可以使用组件在中的数据
 		//mixins: [PLAY_AUDIO], //  定义一个使用混入对象的组件
 		data(){
 			return {
@@ -37,7 +38,8 @@
 		},
 		methods: {
 			getnewsongsData(){
-				this.$http.get('/proxy/?json=true').then(({data})=>{
+				// this.$http.get(process.env.API_HOST+ '?json=true').then(({data})=>{
+				this.$http.get('?json=true').then(({data})=>{
 					//如果传一个{data} 对象的方式  是使用了 解构赋值  得到数据
 					console.log('新歌请求得到的数据',data)
 					this.banner = data.banner
